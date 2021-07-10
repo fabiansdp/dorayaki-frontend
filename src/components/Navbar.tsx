@@ -11,18 +11,18 @@ const Navbar = () => {
     { text: 'Dorayaki', to: '/dorayaki'}
   ]
 
-  const activeClass = 'text-white bg-gray-900'
-  const inactiveClass = 'text-gray-300 hover:text-white hover:bg-gray-700'
+  const activeClass = 'text-black bg-blue-400'
+  const inactiveClass = 'text-white hover:text-black hover:bg-blue-500'
 
   return (
-    <nav className="bg-gray-800">
+    <nav className="bg-blue-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <img
-                className="h-8 w-8"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                className="h-12 w-12"
+                src="dorayaki.svg"
                 alt="Workflow logo"
               />
             </div>
@@ -32,7 +32,7 @@ const Navbar = () => {
                   <Link
                     key={link.text}
                     to={link.to}
-                    className={`px-3 py-2 rounded-md text-sm font-medium ${
+                    className={`px-3 py-2 rounded-md text-base font-medium ${
                       location.pathname === link.to
                         ? activeClass
                         : inactiveClass

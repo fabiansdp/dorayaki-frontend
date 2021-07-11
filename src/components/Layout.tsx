@@ -24,7 +24,7 @@ const Layout: React.FC<Props> = ({
         <title>{title}</title>
       </Helmet>
       <Navbar />
-      <div>
+      <div className="h-screen">
         {children}
       </div>
     </>

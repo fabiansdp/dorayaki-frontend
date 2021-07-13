@@ -6,13 +6,7 @@ const DorayakiList : React.FC = () => {
   const [dorayakis, setDorayakis] = useState<Dorayaki[]>([]);
 
   useEffect(() => {
-    getDorayakis()
-      .then(response => {
-        setDorayakis(response);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    getDorayakis().then(response => setDorayakis(response)).catch(err => console.log(err))
   }, [])
 
   return (

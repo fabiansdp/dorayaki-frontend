@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from "./pages/Home"
 import Dorayaki from './pages/Dorayaki';
 import Shops from './pages/Shops';
+import ShopDetail from './pages/ShopDetail';
 import DorayakiDetail from './pages/DorayakiDetail';
 
 const App = () => {
@@ -18,11 +19,11 @@ const App = () => {
         <Route path="/dorayaki/:id">
           <DorayakiDetail />
         </Route>
-        <Route path="/shops">
+        <Route exact path="/shops">
           <Shops />
         </Route>
         <Route path="/shops/:id">
-          <Shops />
+          <ShopDetail />
         </Route>
       </Switch>
     </Router>

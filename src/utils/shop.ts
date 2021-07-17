@@ -8,3 +8,12 @@ export const getShops = async() => {
     return err;
   }
 }
+
+export const deleteShop = async(id : number) => {
+  try {
+    const response = await axiosInstance.delete(`/shops/${id}`)
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getDorayakis } from "../../utils/dorayaki";
 import DorayakiCard from "./DorayakiCard";
+import FilledButton from "../FilledButton";
 
 const DorayakiList : React.FC = () => {
   const [dorayakis, setDorayakis] = useState<Dorayaki[]>([]);
@@ -10,14 +11,21 @@ const DorayakiList : React.FC = () => {
   }, [])
 
   return (
-    <div className="mt-20 flex flex-wrap justify-center items-center">
-      {dorayakis.map((dorayaki) => (
-        <DorayakiCard 
-          id={dorayaki.id}
-          name={dorayaki.rasa}
-          description={dorayaki.deskripsi}
-        />
-      ))}
+    <div className="p-2">
+      <FilledButton 
+        width="200px"
+        name="+ Add Dorayaki"
+        submit={false}
+      />
+      <div className="mt-5 flex flex-wrap justify-center items-center">
+        {dorayakis.map((dorayaki) => (
+          <DorayakiCard 
+            id={dorayaki.id}
+            name={dorayaki.rasa}
+            description={dorayaki.deskripsi}
+          />
+        ))}
+      </div>
     </div>
   )
 }

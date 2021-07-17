@@ -6,16 +6,27 @@ import FilledButton from "../FilledButton";
 const ShopList : React.FC = () => {
   const fields = ['No.', 'Nama', 'Jalan', 'Kecamatan', 'Provinsi', 'Action'];
   const [shops, setShops] = useState<ShopInfo[]>([]);
+  const [edited, setEdited] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
     getShops()
-      .then((res) => setShops(res.data))
-  }, []);
+      .then((res) => {
+        setShops(res.data);
+        setEdited(false);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    
+  }, [edited]);
 
   const handleDelete = (id: number) => {
     deleteShop(id)
-      .then((res) => console.log(res))
+      .then(() => {
+        setEdited(true);
+      })
+      .catch((err) => console.log(err))
   }
 
   const handleButton = () => {

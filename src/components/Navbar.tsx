@@ -22,7 +22,7 @@ const Navbar = () => {
             <div className="flex-shrink-0">
               <img
                 className="h-12 w-12"
-                src="dorayaki.svg"
+                src="/dorayaki.svg"
                 alt="Workflow logo"
               />
             </div>

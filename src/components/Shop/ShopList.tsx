@@ -10,7 +10,7 @@ const ShopList : React.FC = () => {
 
   useEffect(() => {
     getShops()
-      .then((res) => setShops(res))
+      .then((res) => setShops(res.data))
   }, []);
 
   const handleDelete = (id: number) => {

@@ -5,24 +5,29 @@ import FilledButton from "../FilledButton";
 
 const DorayakiList : React.FC = () => {
   const [dorayakis, setDorayakis] = useState<Dorayaki[]>([]);
+  const [edited, setIsEdited] = useState(false);
 
   useEffect(() => {
-    getDorayakis().then(response => setDorayakis(response)).catch(err => console.log(err))
-  }, [])
-
+    setIsEdited(false)
+    getDorayakis()
+    .then(response => setDorayakis(response.data))
+  }, [edited])
+  
   return (
-    <div className="p-2">
+    <div className="p-2 text-center">
       <FilledButton 
         width="200px"
         name="+ Add Dorayaki"
         submit={false}
       />
       <div className="mt-5 flex flex-wrap justify-center items-center">
-        {dorayakis.map((dorayaki) => (
+        {dorayakis.map((dorayaki, index) => (
           <DorayakiCard 
+            key={index}
             id={dorayaki.id}
             name={dorayaki.rasa}
             description={dorayaki.deskripsi}
+            setIsEdited={setIsEdited}
           />
         ))}
       </div>

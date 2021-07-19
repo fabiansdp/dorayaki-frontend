@@ -1,11 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { updateInventory, addInventory } from "../../utils/shop";
+import { ShopInventory as Inventory } from "../../interfaces/shop";
+import { useParams } from "react-router";
+import InputField from "../InputField";
 
 interface Props {
-  shopInventory: ShopInventory[];
+  shopInventory: Inventory[];
 }
 
 const ShopInventory : React.FC<Props> = ({shopInventory}) => {
   const fields = ['No.', 'Rasa', 'Quantity', 'Action'];
+  const { id } = useParams<{id: string}>();
+  const [error, setError] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState<number | null>();
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    console.log(quantity)
+  }, [quantity])
+  
+  const inputField = () => {
+    return (
+      <input 
+        type="number" 
+        onChange={(evt) => {
+          setQuantity(evt.target.valueAsNumber);
+        }} 
+        placeholder="Jumlah Item"
+        min="0"
+      />
+    )
+  }
+
+  const handleUpdate = (itemId: number) => {
+    updateInventory({
+      dorayaki_id: itemId, 
+      quantity: quantity!
+    }, id)
+      .then((res) => {
+        
+      })
+      .catch((err) => {
+        setError(err.message)
+      })
+  }
 
   return (
     <div className="table w-full p-2">
@@ -29,15 +67,17 @@ const ShopInventory : React.FC<Props> = ({shopInventory}) => {
                 <td className="p-5 border-r">{item.quantity}</td>
                 <td className="p-5 flex justify-center">
                   <p 
-                    className="cursor-pointer bg-red-500 p-2 mx-2 text-white text-xs font-thin rounded-lg" 
+                    className="cursor-pointer bg-blue-500 p-2 mx-2 text-white text-xs font-thin rounded-lg" 
                     onClick={() => {
+                      setShow(!show)
                     }}
                   >
                     Edit Quantity
                   </p>
                   <p 
-                    className="cursor-pointer bg-red-500 p-2 mx-2 text-white text-xs font-thin rounded-lg" 
+                    className="cursor-pointer bg-yellow-500 p-2 mx-2 text-white text-xs font-thin rounded-lg" 
                     onClick={() => {
+                      addInventory({dorayaki_id: 2, shop_id: id, quantity: 80}).then(res => console.log(res))
                     }}
                   >
                     Move Inventory
@@ -45,6 +85,7 @@ const ShopInventory : React.FC<Props> = ({shopInventory}) => {
                   <p 
                     className="cursor-pointer bg-red-500 p-2 mx-2 text-white text-xs font-thin rounded-lg" 
                     onClick={() => {
+
                     }}
                   >
                     Delete

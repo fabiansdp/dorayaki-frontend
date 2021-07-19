@@ -1,4 +1,4 @@
-interface ShopInfo {
+export interface ShopInfo {
   id: number;
   nama: string;
   jalan: string;
@@ -8,10 +8,28 @@ interface ShopInfo {
   updated_at: string;
 }
 
-interface ShopInventory {
+export interface ShopInventory {
   id: number;
   rasa: string;
   deskripsi: string;
   gambar: string;
+  quantity: number;
+}
+
+export interface ShopUpdate {
+  nama?: string;
+  jalan?: string;
+  kecamatan?: string;
+  provinsi?: string;
+}
+
+export interface InventoryAdd {
+  dorayaki_id: number;
+  shop_id: string;
+  quantity: number;
+}
+
+export interface InventoryUpdate {
+  dorayaki_id: number;
   quantity: number;
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getShop } from "../utils/shop";
+import { ShopInfo as Info, ShopInventory as Inventory } from "../interfaces/shop";
 import Layout from '../components/Layout';
 import Header from '../components/Header';
 import ShopInfo from "../components/Shop/ShopInfo";
@@ -8,8 +9,8 @@ import ShopInventory from "../components/Shop/ShopInventory";
 
 const ShopDetails : React.FC = () => {
   const { id } = useParams<{id: string}>();
-  const [shopInfo, setShopInfo] = useState<ShopInfo>();
-  const [shopInventory, setShopInventory] = useState<ShopInventory[]>([]);
+  const [shopInfo, setShopInfo] = useState<Info>();
+  const [shopInventory, setShopInventory] = useState<Inventory[]>([]);
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const ShopDetails : React.FC = () => {
       })
       .catch((err) => console.log(err));
   }, [success]);
-  
+
   return (
     <Layout title={shopInfo?.nama} >
       <Header title="Shop Information" />   

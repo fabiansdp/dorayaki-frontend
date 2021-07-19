@@ -2,9 +2,10 @@ import React from "react";
 
 interface Props {
   type?: string;
-  value: string;
+  value: string | undefined;
   setValue: (newValue: string) => void;
   placeholder?: string;
+  isEdit: boolean
 }
 
 const InputField: React.FC<Props> = ({
@@ -12,6 +13,7 @@ const InputField: React.FC<Props> = ({
   value,
   setValue,
   placeholder,
+  isEdit
 }) => {
   return (
     <div>
@@ -23,6 +25,7 @@ const InputField: React.FC<Props> = ({
           setValue(evt.target.value);
         }}
         placeholder={placeholder}
+        disabled={isEdit ? false : true}
       />
     </div>
   );

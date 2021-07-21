@@ -33,7 +33,7 @@ const ShopInfo : React.FC<Props> = ({shopInfo, setSuccess}) => {
     let dt = transformedDate.getDate();
     const dateString = (dt < 10 ? '0' + dt.toString() : dt.toString());
     const monthString = (month < 10 ? '0' + month.toString() : month.toString());
-    const time = transformedDate.getHours() + ":" + (transformedDate.getMinutes() < 10 ? '0' + transformedDate.getMinutes() : transformedDate.getMinutes() < 10);
+    const time = transformedDate.getHours() + ":" + (transformedDate.getMinutes() < 10 ? '0' + transformedDate.getMinutes() : transformedDate.getMinutes());
 
     return `${dateString}-${monthString}-${year} ${time} WIB`;
   }

@@ -27,7 +27,7 @@ const ShopDetails : React.FC = () => {
     <Layout title={shopInfo?.nama} >
       <Header title="Shop Information" />   
       <ShopInfo shopInfo={shopInfo} setSuccess={setSuccess} />   
-      <ShopInventory shopInventory={shopInventory} />
+      <ShopInventory shopInventory={shopInventory} setSuccess={setSuccess} />
     </Layout>
   )
 } 

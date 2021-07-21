@@ -14,23 +14,7 @@ const ShopInventory : React.FC<Props> = ({shopInventory}) => {
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number | null>();
   const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    console.log(quantity)
-  }, [quantity])
-  
-  const inputField = () => {
-    return (
-      <input 
-        type="number" 
-        onChange={(evt) => {
-          setQuantity(evt.target.valueAsNumber);
-        }} 
-        placeholder="Jumlah Item"
-        min="0"
-      />
-    )
-  }
+  const [selected, setSelected] = useState<number | null>();
 
   const handleUpdate = (itemId: number) => {
     updateInventory({
@@ -61,35 +45,38 @@ const ShopInventory : React.FC<Props> = ({shopInventory}) => {
           </thead>
           <tbody>
             {shopInventory.length > 0 && shopInventory.map((item, index) => (
-              <tr className="bg-gray-100 hover:bg-gray-200 text-center border-b text-sm text-gray-600" key={index}>
+              <tr className="bg-gray-100 hover:bg-gray-200 text-center border-b text-base text-gray-600" key={index}>
                 <td className="p-5 border-r">{index+1}.</td>
                 <td className="p-5 border-r">{item.rasa}</td>
                 <td className="p-5 border-r">{item.quantity}</td>
-                <td className="p-5 flex justify-center">
-                  <p 
-                    className="cursor-pointer bg-blue-500 p-2 mx-2 text-white font-thin rounded-lg" 
-                    onClick={() => {
-                      setShow(show)
-                    }}
-                  >
-                    Edit Quantity
-                  </p>
-                  <p 
-                    className="cursor-pointer bg-yellow-500 p-2 mx-2 text-white font-thin rounded-lg" 
-                    onClick={() => {
-                      addInventory({dorayaki_id: 2, shop_id: id, quantity: 80}).then(res => console.log(res))
-                    }}
-                  >
-                    Move Inventory
-                  </p>
-                  <p 
-                    className="cursor-pointer bg-red-500 p-2 mx-2 text-white font-thin rounded-lg" 
-                    onClick={() => {
+                <td className="p-5">
+                  <div className="flex justify-center text-base font-bold text-white p-2">
+                    <p 
+                      className="cursor-pointer bg-blue-500 p-2 mx-2 rounded-lg" 
+                      onClick={() => {
+                        setShow(!show)
+                        setSelected(item.id)
+                      }}
+                    >
+                      Edit Quantity
+                    </p>
+                    <p 
+                      className="cursor-pointer bg-yellow-500 p-2 mx-2 rounded-lg" 
+                      onClick={() => {
+                        addInventory({dorayaki_id: 2, shop_id: id, quantity: 80}).then(res => console.log(res))
+                      }}
+                    >
+                      Move Inventory
+                    </p>
+                    <p 
+                      className="cursor-pointer bg-red-500 p-2 mx-2 rounded-lg" 
+                      onClick={() => {
 
-                    }}
-                  >
-                    Delete
-                  </p>
+                      }}
+                    >
+                      Delete
+                    </p>
+                  </div>
                 </td>
               </tr>
             ))}

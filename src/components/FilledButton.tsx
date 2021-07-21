@@ -9,13 +9,13 @@ interface Props {
   color?: string
 }
 
-const FilledButton : React.FC<Props> = ({handleClick, name, submit, background = "red", width = "100px", color = "white"}) => {
+const FilledButton : React.FC<Props> = ({handleClick, name, submit, background = "red", width, color = "white"}) => {
   return (
-    <button 
-      onClick={handleClick}
+    <button
+      className="text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
       type={submit ? "submit" : "button"}
       style={{background: background, width: width, color: color}}
-      className="p-2 my-5 mx-1 text-white text-base font-bold rounded-lg"
+      onClick={handleClick}
     >
       {name}
     </button>

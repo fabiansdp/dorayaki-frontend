@@ -8,6 +8,13 @@ export interface ShopInfo {
   updated_at: string;
 }
 
+export interface CreateShop {
+  nama: string;
+  jalan: string;
+  kecamatan: string;
+  provinsi: string;
+}
+
 export interface ShopInventory {
   id: number;
   rasa: string;

@@ -33,7 +33,7 @@ const ShopInfo : React.FC<Props> = ({shopInfo, setSuccess}) => {
     let dt = transformedDate.getDate();
     const dateString = (dt < 10 ? '0' + dt.toString() : dt.toString());
     const monthString = (month < 10 ? '0' + month.toString() : month.toString());
-    const time = transformedDate.getHours() + ":" + transformedDate.getMinutes();
+    const time = transformedDate.getHours() + ":" + (transformedDate.getMinutes() < 10 ? '0' + transformedDate.getMinutes() : transformedDate.getMinutes() < 10);
 
     return `${dateString}-${monthString}-${year} ${time} WIB`;
   }
@@ -66,12 +66,14 @@ const ShopInfo : React.FC<Props> = ({shopInfo, setSuccess}) => {
 
   return (
     <div className="shop-info p-2 m-5">
-      <InputField value={name} setValue={setName} isEdit={isEdit} title="Nama" />
-      <InputField value={jalan} setValue={setJalan} isEdit={isEdit} title="Alamat" />
-      <InputField value={kecamatan} setValue={setKecamatan} isEdit={isEdit} title="Kecamatan" />
-      <InputField value={provinsi} setValue={setProvinsi} isEdit={isEdit} title="Provinsi" />
-      <h2>Updated at: {formatDate(shopInfo?.updated_at)}</h2>
-      <h2>Created at: {formatDate(shopInfo?.created_at)}</h2>
+      <div className="mb-5">
+        <InputField value={name} setValue={setName} isEdit={isEdit} title="Nama" />
+        <InputField value={jalan} setValue={setJalan} isEdit={isEdit} title="Alamat" />
+        <InputField value={kecamatan} setValue={setKecamatan} isEdit={isEdit} title="Kecamatan" />
+        <InputField value={provinsi} setValue={setProvinsi} isEdit={isEdit} title="Provinsi" />
+        <h2>Updated at: {formatDate(shopInfo?.updated_at)}</h2>
+        <h2>Created at: {formatDate(shopInfo?.created_at)}</h2>
+      </div>
       <FilledButton 
         name={!isEdit ? `Edit` : `Cancel`}
         submit={false}

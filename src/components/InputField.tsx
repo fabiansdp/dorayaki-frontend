@@ -1,11 +1,13 @@
 import React from "react";
+import "../styles/style.css";
 
 interface Props {
   type?: string;
   value: string | undefined;
   setValue: (newValue: string) => void;
   placeholder?: string;
-  isEdit: boolean
+  isEdit: boolean;
+  title: string;
 }
 
 const InputField: React.FC<Props> = ({
@@ -13,12 +15,14 @@ const InputField: React.FC<Props> = ({
   value,
   setValue,
   placeholder,
-  isEdit
+  isEdit,
+  title
 }) => {
   return (
     <div>
+      <div className="title">{title}</div>
       <input
-        className="inputBox"
+        className={isEdit ? `` : `border-white`}
         type={type}
         value={value}
         onChange={(evt) => {

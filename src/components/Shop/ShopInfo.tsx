@@ -19,6 +19,13 @@ const ShopInfo : React.FC<Props> = ({shopInfo, setSuccess}) => {
   const [kecamatan, setKecamatan] = useState(shopInfo?.kecamatan);
   const [provinsi, setProvinsi] = useState(shopInfo?.provinsi);
 
+  useEffect(() => {
+    setName(shopInfo?.nama)
+    setJalan(shopInfo?.jalan)
+    setKecamatan(shopInfo?.kecamatan)
+    setProvinsi(shopInfo?.provinsi)
+  }, [shopInfo])
+
   const formatDate = (date?: string) => {
     const transformedDate = new Date(date ? date : "");
     const year = transformedDate.getFullYear();
@@ -58,25 +65,11 @@ const ShopInfo : React.FC<Props> = ({shopInfo, setSuccess}) => {
   }
 
   return (
-    <div className="p-2 m-5">
-      <h2>Nama</h2>
-      {!isEdit ?
-        <p>{shopInfo?.nama}</p>
-        : <InputField value={name} setValue={setName} isEdit={isEdit} 
-      />
-      }
-      <h2>Alamat</h2>
-      {!isEdit ? <p>{shopInfo?.jalan}</p>
-        : <InputField value={jalan} setValue={setJalan} isEdit={isEdit} 
-      />}
-      <h2>Kecamatan</h2>  
-      {!isEdit ? <p>{shopInfo?.kecamatan}</p>
-        : <InputField value={kecamatan} setValue={setKecamatan} isEdit={isEdit} 
-      />}
-      <h2>Provinsi</h2>
-      {!isEdit ? <p>{shopInfo?.provinsi}</p>
-        : <InputField value={provinsi} setValue={setProvinsi} isEdit={isEdit} 
-      />}
+    <div className="shop-info p-2 m-5">
+      <InputField value={name} setValue={setName} isEdit={isEdit} title="Nama" />
+      <InputField value={jalan} setValue={setJalan} isEdit={isEdit} title="Alamat" />
+      <InputField value={kecamatan} setValue={setKecamatan} isEdit={isEdit} title="Kecamatan" />
+      <InputField value={provinsi} setValue={setProvinsi} isEdit={isEdit} title="Provinsi" />
       <h2>Updated at: {formatDate(shopInfo?.updated_at)}</h2>
       <h2>Created at: {formatDate(shopInfo?.created_at)}</h2>
       <FilledButton 

@@ -15,7 +15,7 @@ const FilledButton : React.FC<Props> = ({handleClick, name, submit, background =
       onClick={handleClick}
       type={submit ? "submit" : "button"}
       style={{background: background, width: width, color: color}}
-      className="p-2 my-5 text-white text-xs font-bold rounded-lg"
+      className="p-2 my-5 mx-1 text-white text-base font-bold rounded-lg"
     >
       {name}
     </button>

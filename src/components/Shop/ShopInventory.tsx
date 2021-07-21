@@ -67,15 +67,15 @@ const ShopInventory : React.FC<Props> = ({shopInventory}) => {
                 <td className="p-5 border-r">{item.quantity}</td>
                 <td className="p-5 flex justify-center">
                   <p 
-                    className="cursor-pointer bg-blue-500 p-2 mx-2 text-white text-xs font-thin rounded-lg" 
+                    className="cursor-pointer bg-blue-500 p-2 mx-2 text-white font-thin rounded-lg" 
                     onClick={() => {
-                      setShow(!show)
+                      setShow(show)
                     }}
                   >
                     Edit Quantity
                   </p>
                   <p 
-                    className="cursor-pointer bg-yellow-500 p-2 mx-2 text-white text-xs font-thin rounded-lg" 
+                    className="cursor-pointer bg-yellow-500 p-2 mx-2 text-white font-thin rounded-lg" 
                     onClick={() => {
                       addInventory({dorayaki_id: 2, shop_id: id, quantity: 80}).then(res => console.log(res))
                     }}
@@ -83,7 +83,7 @@ const ShopInventory : React.FC<Props> = ({shopInventory}) => {
                     Move Inventory
                   </p>
                   <p 
-                    className="cursor-pointer bg-red-500 p-2 mx-2 text-white text-xs font-thin rounded-lg" 
+                    className="cursor-pointer bg-red-500 p-2 mx-2 text-white font-thin rounded-lg" 
                     onClick={() => {
 
                     }}

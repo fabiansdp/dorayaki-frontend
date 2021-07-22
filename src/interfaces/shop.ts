@@ -40,3 +40,9 @@ export interface InventoryUpdate {
   dorayaki_id: number;
   quantity: number;
 }
+
+export interface InventoryMove {
+  dorayaki_id: number;
+  recipient_id: number;
+  quantity: number;
+}

@@ -1,5 +1,5 @@
 import { axiosInstance } from "./axios";
-import { ShopUpdate, InventoryUpdate, InventoryAdd, CreateShop } from "../interfaces/shop";
+import { ShopUpdate, InventoryUpdate, InventoryAdd, CreateShop, InventoryMove } from "../interfaces/shop";
 
 export const getShops = async() => {
   try {
@@ -58,6 +58,15 @@ export const updateInventory = async(update: InventoryUpdate, id: string) => {
 export const addInventory = async(data: InventoryAdd) => {
   try {
     const response = await axiosInstance.post(`/inventory`, data)
+    return response.data;
+  } catch (err) {
+    throw err.response.data;
+  }
+}
+
+export const moveInventory = async(data: InventoryMove, id : string) => {
+  try {
+    const response = await axiosInstance.patch(`/shops/inventory/${id}`, data)
     return response.data;
   } catch (err) {
     throw err.response.data;

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { updateInventory, addInventory } from "../../utils/shop";
-import { ShopInventory as Inventory } from "../../interfaces/shop";
+import React, { useState } from "react";
+import { updateInventory, addInventory, moveInventory, getShops } from "../../utils/shop";
+import { ShopInfo, ShopInventory as Inventory } from "../../interfaces/shop";
 import { useParams } from "react-router";
 import { getDorayakis } from "../../utils/dorayaki";
 import InputField from "../InputField";
 import Modal from "../Modal";
 import FilledButton from "../FilledButton";
-import SelectField from "../SelectField";
+import SelectDorayaki from "../Dorayaki/SelectDorayaki";
+import SelectShop from "../Shop/SelectShop";
 
 interface Props {
   shopInventory: Inventory[];
@@ -20,11 +21,18 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
   const [quantity, setQuantity] = useState<string | undefined>();
   const [showUpdate, setShowUpdate] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
+  const [showMove, setShowMove] = useState(false);
   const [dorayakiList, setDorayakiList] = useState<Dorayaki[]>([]);
+  const [shopList, setShopList] = useState<ShopInfo[]>([]);
   const [selected, setSelected] = useState<number | undefined>();
+  const [recipient, setRecipient] = useState<number | undefined>();
 
   const getDorayakiList = () => {
     getDorayakis().then((res) => setDorayakiList(res.data))
+  }
+
+  const getShopList = () => {
+    getShops().then((res) => setShopList(res.data))
   }
   
   const updateModal = () => {
@@ -55,7 +63,7 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
   const addModal = () => {
     return (
       <Modal setShow={setShowAdd} title={`Add Dorayaki`}>
-        <SelectField value={selected} setValue={setSelected} choices={dorayakiList} />
+        <SelectDorayaki value={selected} setValue={setSelected} choices={dorayakiList} />
         <InputField value={quantity} setValue={setQuantity} isEdit={true} title="Quantity" type="number" />
         <div className="flex justify-center text-base font-bold text-white p-2">
           <FilledButton 
@@ -77,6 +85,33 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
       </Modal> 
     )
   }
+  
+  const showModal = () => {
+    return (
+      <Modal setShow={setShowAdd} title={`Move Inventory`}>
+        <SelectShop value={recipient} setValue={setRecipient} choices={shopList} />
+        <InputField value={quantity} setValue={setQuantity} isEdit={true} title="Quantity" type="number" />
+        <div className="flex justify-center text-base font-bold text-white p-2">
+          <FilledButton 
+            name="Cancel"
+            submit={false}
+            handleClick={() => {
+              setShowMove(false)
+              setQuantity(undefined)
+              setRecipient(undefined)
+              setSelected(undefined)
+            }}
+          />
+          <FilledButton 
+            name="Submit"
+            submit={true}
+            background="#4CAF50"
+            handleClick={handleMove}
+          />
+        </div>
+      </Modal> 
+    )
+  }
 
   const handleUpdate = () => {
     if (selected && quantity) {
@@ -85,9 +120,9 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
         quantity: parseInt(quantity)
       }, id)
         .then(() => {
-          setQuantity(undefined)
           setSuccess(true)
           setShowUpdate(false)
+          setQuantity(undefined)
           setSelected(undefined)
         })
         .catch((err) => {
@@ -103,11 +138,10 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
         shop_id: parseInt(id),
         quantity: parseInt(quantity),
       })
-      .then((res) => {
-        console.log(res)
-        setQuantity(undefined)
+      .then(() => {
         setSuccess(true)
         setShowAdd(false)
+        setQuantity(undefined)
         setSelected(undefined)
       })
       .catch((err) => {
@@ -116,16 +150,52 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
     }
   }
 
+  const handleMove = () => {
+    if (quantity && selected && recipient) {
+      moveInventory({
+        dorayaki_id: selected,
+        recipient_id: recipient,
+        quantity: parseInt(quantity)
+      }, id)
+      .then(() => {
+        setSuccess(true)
+        setShowMove(false)
+        setQuantity(undefined)
+        setSelected(undefined)
+        setRecipient(undefined)
+      })
+      .catch((err) => {
+        setError(err.message)
+      })
+    }
+  }
+
+  const showEditModal = (itemID : number) => {
+    setSelected(itemID)
+    setShowUpdate(true)
+  }
+
+  const showMoveModal = (itemID : number) => {
+    setSelected(itemID);
+    setShowMove(true);
+    setQuantity(undefined);
+    setRecipient(undefined);
+    getShopList();
+  }
+
   const showAddModal = () => {
     setShowAdd(true);
     setQuantity(undefined);
     getDorayakiList();
   }
 
+
+
   return (
     <div className="table w-full p-2 my-10">
       {showUpdate ? updateModal() : null}
       {showAdd ? addModal() : null}
+      {showMove ? showModal() : null}
       <FilledButton 
         name="+ Add Dorayaki" 
         submit={false} 
@@ -155,15 +225,17 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
                     className="cursor-pointer bg-blue-500 p-2 mx-2 rounded-lg" 
                     onClick={() => {
                       setQuantity(item.quantity.toString())
-                      setSelected(item.id)
-                      setShowUpdate(true)
+                      showEditModal(item.id)
                     }}
                   >
                     Edit Quantity
                   </p>
                   <p 
                     className="cursor-pointer bg-yellow-500 p-2 mx-2 rounded-lg" 
-                    onClick={() => console.log()}
+                    onClick={() => {
+                      console.log("move")
+                      showMoveModal(item.id)
+                    }}
                   >
                     Move Inventory
                   </p>

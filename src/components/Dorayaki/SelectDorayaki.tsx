@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/style.css';
+import '../../styles/style.css';
 
 interface Props {
   value: number | undefined;
@@ -7,7 +7,7 @@ interface Props {
   choices: Dorayaki[];
 }
 
-const SelectField: React.FC<Props> = ({
+const SelectDorayaki: React.FC<Props> = ({
   value,
   setValue,
   choices
@@ -27,4 +27,4 @@ const SelectField: React.FC<Props> = ({
   );
 };
 
-export default SelectField;
+export default SelectDorayaki;

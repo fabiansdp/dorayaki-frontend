@@ -22,7 +22,8 @@ const InputField: React.FC<Props> = ({
     <div>
       <div className="title">{title}</div>
       <input
-        className={isEdit ? `` : `border-white`}
+        className="inputBox"
+        style={{border: isEdit ? "" : "black"}}
         type={type}
         value={value}
         onChange={(evt) => {
@@ -30,6 +31,7 @@ const InputField: React.FC<Props> = ({
         }}
         placeholder={placeholder}
         disabled={isEdit ? false : true}
+        min={0}
       />
     </div>
   );

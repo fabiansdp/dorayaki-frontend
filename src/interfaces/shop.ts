@@ -32,7 +32,7 @@ export interface ShopUpdate {
 
 export interface InventoryAdd {
   dorayaki_id: number;
-  shop_id: string;
+  shop_id: number;
   quantity: number;
 }
 

@@ -5,7 +5,7 @@
   color: black;
 }
 
-input {
+.inputBox {
   width: 100%;
   border: none;
   padding: 0.5rem 0 0.5rem 0;
@@ -18,12 +18,12 @@ input {
   font-weight: bold;
 }
 
-input:focus {
+.inputBox:focus {
   outline: none;
 }
 
 @media only screen and (max-width: 767px) {
-  input {
+  .inputBox {
     font-size: 1rem;
   }
 }

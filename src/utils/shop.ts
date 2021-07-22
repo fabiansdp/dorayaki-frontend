@@ -57,7 +57,7 @@ export const updateInventory = async(update: InventoryUpdate, id: string) => {
 
 export const addInventory = async(data: InventoryAdd) => {
   try {
-    const response = await axiosInstance.post("/shops/inventory", data)
+    const response = await axiosInstance.post(`/inventory`, data)
     return response.data;
   } catch (err) {
     throw err.response.data;

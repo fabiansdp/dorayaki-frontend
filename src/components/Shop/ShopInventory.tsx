@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { updateInventory, addInventory, moveInventory, getShops } from "../../utils/shop";
+import { updateInventory, addInventory, moveInventory, getShops, deleteInventory } from "../../utils/shop";
 import { ShopInfo, ShopInventory as Inventory } from "../../interfaces/shop";
 import { useParams } from "react-router";
 import { getDorayakis } from "../../utils/dorayaki";
@@ -86,10 +86,10 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
     )
   }
   
-  const showModal = () => {
+  const moveModal = () => {
     return (
       <Modal setShow={setShowAdd} title={`Move Inventory`}>
-        <SelectShop value={recipient} setValue={setRecipient} choices={shopList} />
+        <SelectShop value={recipient} setValue={setRecipient} choices={shopList.filter((shop) => shop.id != parseInt(id))} />
         <InputField value={quantity} setValue={setQuantity} isEdit={true} title="Quantity" type="number" />
         <div className="flex justify-center text-base font-bold text-white p-2">
           <FilledButton 
@@ -166,8 +166,20 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
       })
       .catch((err) => {
         setError(err.message)
+        setShowMove(false)
       })
     }
+  }
+
+  const handleDelete = (itemID: number) => {
+    deleteInventory(itemID, id)
+    .then((res) => {
+      console.log(res)
+      setSuccess(true)
+    })
+    .catch((err) => {
+      setError(err.message)
+    })
   }
 
   const showEditModal = (itemID : number) => {
@@ -189,13 +201,11 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
     getDorayakiList();
   }
 
-
-
   return (
     <div className="table w-full p-2 my-10">
       {showUpdate ? updateModal() : null}
       {showAdd ? addModal() : null}
-      {showMove ? showModal() : null}
+      {showMove ? moveModal() : null}
       <FilledButton 
         name="+ Add Dorayaki" 
         submit={false} 
@@ -233,7 +243,6 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
                   <p 
                     className="cursor-pointer bg-yellow-500 p-2 mx-2 rounded-lg" 
                     onClick={() => {
-                      console.log("move")
                       showMoveModal(item.id)
                     }}
                   >
@@ -241,7 +250,7 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
                   </p>
                   <p 
                     className="cursor-pointer bg-red-500 p-2 mx-2 rounded-lg" 
-                    onClick={() => console.log()}
+                    onClick={() => handleDelete(item.id)}
                   >
                     Delete
                   </p>

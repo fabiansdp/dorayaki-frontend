@@ -48,7 +48,7 @@ export const deleteShop = async(id : number) => {
 
 export const updateInventory = async(update: InventoryUpdate, id: string) => {
   try {
-    const response = await axiosInstance.put(`/shops/inventory/${id}`, update)
+    const response = await axiosInstance.put(`/inventory/${id}`, update)
     return response.data;
   } catch (err) {
     throw err.response.data;
@@ -66,7 +66,16 @@ export const addInventory = async(data: InventoryAdd) => {
 
 export const moveInventory = async(data: InventoryMove, id : string) => {
   try {
-    const response = await axiosInstance.patch(`/shops/inventory/${id}`, data)
+    const response = await axiosInstance.patch(`/inventory/${id}`, data)
+    return response.data;
+  } catch (err) {
+    throw err.response.data;
+  }
+}
+
+export const deleteInventory = async(itemID: number, id : string) => {
+  try {
+    const response = await axiosInstance.delete(`/inventory/${id}`, {data: itemID})
     return response.data;
   } catch (err) {
     throw err.response.data;

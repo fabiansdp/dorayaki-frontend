@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { getDorayaki } from "../utils/dorayaki";
 import Layout from '../components/Layout';
 import Header from '../components/Header';
+import DorayakiInfo from "../components/Dorayaki/DorayakiInfo";
 
 const DorayakiDetail : React.FC = () => {
   const { id } = useParams<{id: string}>();
@@ -13,12 +14,16 @@ const DorayakiDetail : React.FC = () => {
       .then((res) => {
         setDorayaki(res.data)
       })
-      .catch((err) => console.log(err));
   }, []);
 
   return (
     <Layout title={dorayaki?.rasa}>
       <Header title="Dorayaki Details" />
+      {dorayaki && 
+        <DorayakiInfo 
+          dorayaki={dorayaki}
+        />
+      }
     </Layout>
   );
 };

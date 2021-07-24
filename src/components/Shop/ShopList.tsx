@@ -60,39 +60,46 @@ const ShopList : React.FC = () => {
     }
   }
 
+  const shopModal = () => {
+    return (
+      <Modal setShow={setShowModal} title={`Create A Shop`}>
+        <div>
+          <InputField value={name} setValue={setName} isEdit={true} title="Nama" />
+          <InputField value={jalan} setValue={setJalan} isEdit={true} title="Alamat" />
+          <InputField value={kecamatan} setValue={setKecamatan} isEdit={true} title="Kecamatan" />
+          <InputField value={provinsi} setValue={setProvinsi} isEdit={true} title="Provinsi" />
+        </div>
+        <div className="flex justify-center text-base font-bold text-white p-2">
+          <FilledButton 
+            name="Cancel"
+            submit={false}
+            handleClick={() => {
+              setShowModal(!showModal)
+            }}
+          />
+          <FilledButton 
+            name="Submit"
+            submit={true}
+            background="#4CAF50"
+            handleClick={handleSubmit}
+          />
+        </div>
+      </Modal>
+    )
+  }
+
   return (
     <>
-      {showModal? 
-        <Modal setShow={setShowModal} title={`Create A Shop`}>
-          <div>
-            <InputField value={name} setValue={setName} isEdit={true} title="Nama" />
-            <InputField value={jalan} setValue={setJalan} isEdit={true} title="Alamat" />
-            <InputField value={kecamatan} setValue={setKecamatan} isEdit={true} title="Kecamatan" />
-            <InputField value={provinsi} setValue={setProvinsi} isEdit={true} title="Provinsi" />
-          </div>
-          <div className="flex justify-center text-base font-bold text-white p-2">
-            <FilledButton 
-              name="Cancel"
-              submit={false}
-              handleClick={() => {
-                resetFields()
-                setShowModal(!showModal)
-              }}
-            />
-            <FilledButton 
-              name="Submit"
-              submit={true}
-              background="#4CAF50"
-              handleClick={handleSubmit}
-            />
-          </div>
-        </Modal> 
-      : null}
+      {showModal ? shopModal() : null}
       <div className="table w-full p-2">
         <FilledButton 
+          width="200px"
           name="+ Add Shop"
           submit={false}
-          handleClick={() => setShowModal(!showModal)}
+          handleClick={() => {
+            resetFields()
+            setShowModal(!showModal)
+          }}
         />
         <table className="w-full border mt-4">
           <thead>

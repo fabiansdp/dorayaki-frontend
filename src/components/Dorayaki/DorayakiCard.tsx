@@ -7,21 +7,22 @@ interface Props {
   name: string;
   description: string;
   setIsEdited: (edited: boolean) => void;
+  setError: (err : string | null) => void;
 }
 
-const DorayakiCard : React.FC<Props> = ({id, name, description, setIsEdited}) => {
+const DorayakiCard : React.FC<Props> = ({id, name, description, setIsEdited, setError}) => {
   const handleDelete = () => {
-    setIsEdited(true)
+    setError(null)
     deleteDorayaki(id)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then(() => setIsEdited(true))
+      .catch((err) => setError(err.message));
   }
 
   return (
     <div className="sm:m-1 md:m-5 flex flex-col h-min w-56 p-1 border-box bg-white rounded xl">
       <div className="flex rounded flex-col w-ful w-full h-48 bg-gray-200 items-center">
         <img 
-          src="dorayaki.svg" 
+          src="/dorayaki.svg" 
           alt="Foto Dorayaki" 
         />
       </div>

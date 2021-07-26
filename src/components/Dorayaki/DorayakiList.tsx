@@ -5,11 +5,13 @@ import FilledButton from "../FilledButton";
 import Modal from "../Modal";
 import InputField from "../InputField";
 import TextArea from "../TextArea";
+import FileInput from "../FileInput";
 
 const DorayakiList : React.FC = () => {
   const [dorayakis, setDorayakis] = useState<Dorayaki[]>([]);
   const [rasa, setRasa] = useState<string | undefined>();
   const [deskripsi, setDeskripsi] = useState<string | undefined>();
+  const [image, setImage] = useState<File | null>(null);
   const [edited, setIsEdited] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState<string | null>();
@@ -26,13 +28,14 @@ const DorayakiList : React.FC = () => {
   }
 
   const handleSubmit = () => {
-    if (rasa && deskripsi) {
+    if (rasa && deskripsi && image) {
       createDorayaki({
         rasa: rasa,
         deskripsi: deskripsi,
-        gambar: "Path"
+        gambar: image
       })
-      .then(() => {
+      .then((res) => {
+        console.log(res)
         setIsEdited(true)
         setShowModal(false)
       })
@@ -43,10 +46,10 @@ const DorayakiList : React.FC = () => {
   const dorayakiModal = () => {
     return (
       <Modal setShow={setShowModal} title={`Add Dorayaki Variant`}>
-        <div>
+        <div className="p-3 m-3">
           <InputField value={rasa} setValue={setRasa} isEdit={true} title="Rasa" />
-          <TextArea value={deskripsi} setValue={setDeskripsi} disabled={false} title="Deskripsi" />
-          <input type="file" />
+          <TextArea value={deskripsi} setValue={setDeskripsi} title="Deskripsi" />
+          <FileInput setValue={setImage} title="Upload foto" />
         </div>
         <div className="flex justify-center text-base font-bold text-white p-2">
           <FilledButton 

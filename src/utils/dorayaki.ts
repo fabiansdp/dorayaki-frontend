@@ -20,7 +20,12 @@ export const getDorayaki = async(id : string) => {
 
 export const createDorayaki = async(data : CreateDorayaki) => {
   try {
-    const response = await axiosInstance.post(`/dorayakis/`, data);
+    const {rasa, gambar, deskripsi} = data;
+    const formData = new FormData();
+    formData.append('file', gambar);
+    formData.append('rasa', rasa);
+    formData.append('deskripsi', deskripsi);
+    const response = await axiosInstance.post(`/dorayakis/`, formData);
     return response.data;
   } catch (err) {
     throw err.response.data;

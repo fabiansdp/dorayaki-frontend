@@ -8,5 +8,5 @@ interface Dorayaki {
 interface CreateDorayaki {
   rasa: string;
   deskripsi: string;
-  gambar: string;
+  gambar: File;
 }

@@ -8,13 +8,14 @@ import DorayakiInfo from "../components/Dorayaki/DorayakiInfo";
 const DorayakiDetail : React.FC = () => {
   const { id } = useParams<{id: string}>();
   const [dorayaki, setDorayaki] = useState<Dorayaki>();
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     getDorayaki(id)
       .then((res) => {
         setDorayaki(res.data)
       })
-  }, []);
+  }, [reload]);
 
   return (
     <Layout title={dorayaki?.rasa}>
@@ -22,6 +23,7 @@ const DorayakiDetail : React.FC = () => {
       {dorayaki && 
         <DorayakiInfo 
           dorayaki={dorayaki}
+          setReload={setReload}
         />
       }
     </Layout>

@@ -24,10 +24,11 @@ const DorayakiCard : React.FC<Props> = ({id, name, description, gambar, setIsEdi
 
   return (
     <div className="sm:m-1 md:m-5 flex flex-col h-min w-56 p-1 border-box bg-white rounded xl">
-      <div className="flex rounded flex-col w-ful w-full h-48 bg-gray-200 items-center">
+      <div className="flex rounded flex-col w-full h-48 bg-gray-200 items-center">
         <img 
           src={path} 
           alt="Foto Dorayaki" 
+          className="h-full w-full"
         />
       </div>
       <div className="flex border-box p-1 flex-col">

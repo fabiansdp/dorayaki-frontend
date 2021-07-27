@@ -10,3 +10,9 @@ interface CreateDorayaki {
   deskripsi: string;
   gambar: File;
 }
+
+interface UpdateDorayaki {
+  rasa?: string;
+  deskripsi?: string;
+  gambar?: File;
+}

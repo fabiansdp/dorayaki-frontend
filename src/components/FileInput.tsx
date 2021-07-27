@@ -10,6 +10,7 @@ interface Props {
 const FileInput: React.FC<Props> = ({
   title,
   setValue,
+  disabled= true
 }) => {
   return (
     <div className="text-area my-3">
@@ -17,6 +18,7 @@ const FileInput: React.FC<Props> = ({
       <input 
         type="file" 
         onChange={(e) => (e.target.files && e.target.files.length ? setValue(e.target.files[0]) : null)} 
+        disabled={disabled}
         accept='image/png, image/jpeg'
       />
     </div>

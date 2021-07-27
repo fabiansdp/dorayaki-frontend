@@ -40,7 +40,7 @@ const DorayakiInfo: React.FC<Props> = ({dorayaki, setReload}) => {
 
   return (
     <>
-      <div className="block md:flex h-screen justify-center">
+      <div className="block md:flex h-1/2 md:h-screen justify-center">
         <div className="p-3 md:p-5 h-full">
           <img 
             className="h-full"
@@ -54,21 +54,19 @@ const DorayakiInfo: React.FC<Props> = ({dorayaki, setReload}) => {
           <FileInput setValue={setImage} disabled={!isEdit} title="Upload foto" />
         </div>
       </div>
-      <div>
-        <div className="flex justify-center">
+      <div className="flex justify-center">
+        <FilledButton 
+          name={!isEdit ? `Edit` : `Cancel`}
+          submit={false}
+          handleClick={() => setIsEdit(!isEdit)}
+        />
+        {isEdit && 
           <FilledButton 
-            name={!isEdit ? `Edit` : `Cancel`}
-            submit={false}
-            handleClick={() => setIsEdit(!isEdit)}
+            name="Submit"
+            submit={true}
+            handleClick={handleSubmit}
           />
-          {isEdit && 
-            <FilledButton 
-              name="Submit"
-              submit={true}
-              handleClick={handleSubmit}
-            />
-          }
-        </div>
+        }
       </div>
     </>
   )

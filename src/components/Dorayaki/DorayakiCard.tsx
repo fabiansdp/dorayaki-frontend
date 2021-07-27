@@ -5,12 +5,16 @@ import { deleteDorayaki } from "../../utils/dorayaki";
 interface Props {
   id: number;
   name: string;
+  gambar: string;
   description: string;
   setIsEdited: (edited: boolean) => void;
   setError: (err : string | null) => void;
 }
 
-const DorayakiCard : React.FC<Props> = ({id, name, description, setIsEdited, setError}) => {
+const DorayakiCard : React.FC<Props> = ({id, name, description, gambar, setIsEdited, setError}) => {
+  const { VITE_BACKEND_URL }= import.meta.env;
+  const path = `${VITE_BACKEND_URL}/file/${gambar}`;
+
   const handleDelete = () => {
     setError(null)
     deleteDorayaki(id)
@@ -22,7 +26,7 @@ const DorayakiCard : React.FC<Props> = ({id, name, description, setIsEdited, set
     <div className="sm:m-1 md:m-5 flex flex-col h-min w-56 p-1 border-box bg-white rounded xl">
       <div className="flex rounded flex-col w-ful w-full h-48 bg-gray-200 items-center">
         <img 
-          src="/dorayaki.svg" 
+          src={path} 
           alt="Foto Dorayaki" 
         />
       </div>

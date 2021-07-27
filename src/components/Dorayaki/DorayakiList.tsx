@@ -90,6 +90,7 @@ const DorayakiList : React.FC = () => {
               id={dorayaki.id}
               name={dorayaki.rasa}
               description={dorayaki.deskripsi}
+              gambar={dorayaki.gambar}
               setIsEdited={setIsEdited}
               setError={setError}
             />

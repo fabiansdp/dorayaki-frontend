@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import { getDorayakis } from "../../utils/dorayaki";
 import InputField from "../InputField";
 import Modal from "../Modal";
+import ConfirmModal from "../ConfirmModal";
 import FilledButton from "../FilledButton";
 import SelectDorayaki from "../Dorayaki/SelectDorayaki";
 import SelectShop from "../Shop/SelectShop";
@@ -18,11 +19,12 @@ interface Props {
 const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
   const fields = ['No.', 'Rasa', 'Quantity', 'Action'];
   const { id } = useParams<{id: string}>();
-  const [error, setError] = useState<string | null>();
+  const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<string | undefined>();
   const [showUpdate, setShowUpdate] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [showMove, setShowMove] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [dorayakiList, setDorayakiList] = useState<Dorayaki[]>([]);
   const [shopList, setShopList] = useState<ShopInfo[]>([]);
   const [selected, setSelected] = useState<number | undefined>();
@@ -100,14 +102,17 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
     }
   }
 
-  const handleDelete = (itemID: number) => {
-    deleteInventory(itemID, id)
-    .then(() => {
-      setSuccess(true)
-    })
-    .catch((err) => {
-      setError(err.message)
-    })
+  const handleDelete = () => {
+    if (selected) {
+      deleteInventory(selected, id)
+      .then(() => {
+        setSuccess(true)
+        setShowConfirm(false)
+      })
+      .catch((err) => {
+        setError(err.message)
+      })
+    }
   }
 
   const showEditModal = (itemID : number) => {
@@ -218,6 +223,11 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
       {showUpdate ? updateModal() : null}
       {showAdd ? addModal() : null}
       {showMove ? moveModal() : null}
+      {showConfirm ? 
+        <ConfirmModal setShow={setShowConfirm} handleSubmit={handleDelete} error={error} setError={setError} /> 
+        : 
+        null
+      }
       <FilledButton 
         name="+ Add Dorayaki" 
         submit={false} 
@@ -262,7 +272,10 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
                   </p>
                   <p 
                     className="cursor-pointer bg-red-500 p-2 mx-2 rounded-lg" 
-                    onClick={() => handleDelete(item.id)}
+                    onClick={() => {
+                      setShowConfirm(true)
+                      setSelected(item.id)
+                    }}
                   >
                     Delete
                   </p>

@@ -4,6 +4,7 @@ import { getShops, deleteShop, createShop } from "../../utils/shop";
 import { ShopInfo } from "../../interfaces/shop";
 import FilledButton from "../FilledButton";
 import Modal from "../Modal";
+import ConfirmModal from "../ConfirmModal";
 import InputField from "../InputField";
 import SearchBar from "../SearchBar";
 import Alert from "../Alert";
@@ -13,12 +14,14 @@ const ShopList : React.FC = () => {
   const [shops, setShops] = useState<ShopInfo[]>([]);
   const [edited, setEdited] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [selected, setSelected] = useState<number | null>();
   const [name, setName] = useState<string | undefined>();
   const [jalan, setJalan] = useState<string | undefined>();
   const [kecamatan, setKecamatan] = useState<string | undefined>();
   const [provinsi, setProvinsi] = useState<string | undefined>();
   const [query, setQuery] = useState<string>('');
-  const [error, setError] = useState<string | null>();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     getShops()
@@ -46,12 +49,15 @@ const ShopList : React.FC = () => {
     }
   };
 
-  const handleDelete = (id: number) => {
-    deleteShop(id)
+  const handleDelete = () => {
+    if (selected) {
+      deleteShop(selected)
       .then(() => {
+        setShowConfirm(false)
         setEdited(true);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => setError(err.message))
+    }
   }
 
   const resetFields = () => {
@@ -112,6 +118,7 @@ const ShopList : React.FC = () => {
   return (
     <>
       {showModal ? shopModal() : null}
+      {showConfirm ? <ConfirmModal setShow={setShowConfirm} handleSubmit={handleDelete} error={error} setError={setError} /> : null}
       <div className="table w-full p-2 overflow-scroll">
         <div className="block md:flex justify-between">
           <FilledButton 
@@ -156,7 +163,8 @@ const ShopList : React.FC = () => {
                   <p 
                     className="cursor-pointer bg-red-500 p-2 rounded-lg" 
                     onClick={() => {
-                      handleDelete(shop.id)
+                      setShowConfirm(true)
+                      setSelected(shop.id)
                     }}
                   >
                     Remove

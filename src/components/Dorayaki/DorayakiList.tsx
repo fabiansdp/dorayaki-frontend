@@ -15,7 +15,7 @@ const DorayakiList : React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [edited, setIsEdited] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [error, setError] = useState<string | null>();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setIsEdited(false)
@@ -51,7 +51,7 @@ const DorayakiList : React.FC = () => {
         <div className="p-3 m-3">
           <InputField value={rasa} setValue={setRasa} isEdit={true} title="Rasa" />
           <TextArea value={deskripsi} setValue={setDeskripsi} title="Deskripsi" />
-          <FileInput setValue={setImage} title="Upload foto" />
+          <FileInput setValue={setImage} disabled={false} title="Upload foto" />
         </div>
         <div className="flex justify-center text-base font-bold text-white p-2">
           <FilledButton 
@@ -98,8 +98,10 @@ const DorayakiList : React.FC = () => {
               gambar={dorayaki.gambar}
               setIsEdited={setIsEdited}
               setError={setError}
+              error={error}
             />
           ))}
+          {!dorayakis.length && <p>Tidak ada dorayaki</p>}
         </div>
       </div>
     </>

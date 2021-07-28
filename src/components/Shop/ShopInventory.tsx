@@ -8,6 +8,7 @@ import Modal from "../Modal";
 import FilledButton from "../FilledButton";
 import SelectDorayaki from "../Dorayaki/SelectDorayaki";
 import SelectShop from "../Shop/SelectShop";
+import Alert from "../Alert";
 
 interface Props {
   shopInventory: Inventory[];
@@ -35,84 +36,6 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
     getShops().then((res) => setShopList(res.data))
   }
   
-  const updateModal = () => {
-    return (
-      <Modal setShow={setShowUpdate} title={`Edit Inventory Quantity`}>
-        <InputField value={quantity} setValue={setQuantity} isEdit={true} title="New Quantity" type="number" />
-        <div className="flex justify-center text-base font-bold text-white p-2">
-          <FilledButton 
-            name="Cancel"
-            submit={false}
-            handleClick={() => {
-              setQuantity(undefined)
-              setShowUpdate(false)
-              setSelected(undefined)
-            }}
-          />
-          <FilledButton 
-            name="Submit"
-            submit={true}
-            background="#4CAF50"
-            handleClick={handleUpdate}
-          />
-        </div>
-      </Modal> 
-    )
-  }
-
-  const addModal = () => {
-    return (
-      <Modal setShow={setShowAdd} title={`Add Dorayaki`}>
-        <SelectDorayaki value={selected} setValue={setSelected} choices={dorayakiList} />
-        <InputField value={quantity} setValue={setQuantity} isEdit={true} title="Quantity" type="number" />
-        <div className="flex justify-center text-base font-bold text-white p-2">
-          <FilledButton 
-            name="Cancel"
-            submit={false}
-            handleClick={() => {
-              setQuantity(undefined)
-              setShowAdd(false)
-              setSelected(undefined)
-            }}
-          />
-          <FilledButton 
-            name="Submit"
-            submit={true}
-            background="#4CAF50"
-            handleClick={handleAdd}
-          />
-        </div>
-      </Modal> 
-    )
-  }
-  
-  const moveModal = () => {
-    return (
-      <Modal setShow={setShowAdd} title={`Move Inventory`}>
-        <SelectShop value={recipient} setValue={setRecipient} choices={shopList.filter((shop) => shop.id != parseInt(id))} />
-        <InputField value={quantity} setValue={setQuantity} isEdit={true} title="Quantity" type="number" />
-        <div className="flex justify-center text-base font-bold text-white p-2">
-          <FilledButton 
-            name="Cancel"
-            submit={false}
-            handleClick={() => {
-              setShowMove(false)
-              setQuantity(undefined)
-              setRecipient(undefined)
-              setSelected(undefined)
-            }}
-          />
-          <FilledButton 
-            name="Submit"
-            submit={true}
-            background="#4CAF50"
-            handleClick={handleMove}
-          />
-        </div>
-      </Modal> 
-    )
-  }
-
   const handleUpdate = () => {
     if (selected && quantity) {
       updateInventory({
@@ -128,6 +51,8 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
         .catch((err) => {
           setError(err.message)
         })
+    } else {
+      setError("Ada field kosong")
     }
   }
 
@@ -147,6 +72,8 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
       .catch((err) => {
         setError(err.message)
       })
+    } else {
+      setError("Ada field kosong")
     }
   }
 
@@ -168,13 +95,14 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
         setError(err.message)
         setShowMove(false)
       })
+    } else {
+      setError("Ada field kosong")
     }
   }
 
   const handleDelete = (itemID: number) => {
     deleteInventory(itemID, id)
-    .then((res) => {
-      console.log(res)
+    .then(() => {
       setSuccess(true)
     })
     .catch((err) => {
@@ -199,6 +127,90 @@ const ShopInventory : React.FC<Props> = ({shopInventory, setSuccess}) => {
     setShowAdd(true);
     setQuantity(undefined);
     getDorayakiList();
+  }
+
+  const updateModal = () => {
+    return (
+      <Modal setShow={setShowUpdate} title={`Edit Inventory Quantity`}>
+        <InputField value={quantity} setValue={setQuantity} isEdit={true} title="New Quantity" type="number" />
+        <div className="flex justify-center text-base font-bold text-white p-2">
+          <FilledButton 
+            name="Cancel"
+            submit={false}
+            handleClick={() => {
+              setError(null)
+              setQuantity(undefined)
+              setShowUpdate(false)
+              setSelected(undefined)
+            }}
+          />
+          <FilledButton 
+            name="Submit"
+            submit={true}
+            background="#4CAF50"
+            handleClick={handleUpdate}
+          />
+        </div>
+        {showUpdate && error && <Alert error={error} setError={setError} />}
+      </Modal> 
+    )
+  }
+
+  const addModal = () => {
+    return (
+      <Modal setShow={setShowAdd} title={`Add Dorayaki`}>
+        <SelectDorayaki value={selected} setValue={setSelected} choices={dorayakiList} />
+        <InputField value={quantity} setValue={setQuantity} isEdit={true} title="Quantity" type="number" />
+        <div className="flex justify-center text-base font-bold text-white p-2">
+          <FilledButton 
+            name="Cancel"
+            submit={false}
+            handleClick={() => {
+              setError(null)
+              setQuantity(undefined)
+              setShowAdd(false)
+              setSelected(undefined)
+            }}
+          />
+          <FilledButton 
+            name="Submit"
+            submit={true}
+            background="#4CAF50"
+            handleClick={handleAdd}
+          />
+        </div>
+        {showAdd && error && <Alert error={error} setError={setError} />}
+      </Modal> 
+    )
+  }
+  
+  const moveModal = () => {
+    return (
+      <Modal setShow={setShowAdd} title={`Move Inventory`}>
+        <SelectShop value={recipient} setValue={setRecipient} choices={shopList.filter((shop) => shop.id != parseInt(id))} />
+        <InputField value={quantity} setValue={setQuantity} isEdit={true} title="Quantity" type="number" />
+        <div className="flex justify-center text-base font-bold text-white p-2">
+          <FilledButton 
+            name="Cancel"
+            submit={false}
+            handleClick={() => {
+              setError(null)
+              setShowMove(false)
+              setQuantity(undefined)
+              setRecipient(undefined)
+              setSelected(undefined)
+            }}
+          />
+          <FilledButton 
+            name="Submit"
+            submit={true}
+            background="#4CAF50"
+            handleClick={handleMove}
+          />
+        </div>
+        {showMove && error && <Alert error={error} setError={setError} />}
+      </Modal> 
+    )
   }
 
   return (

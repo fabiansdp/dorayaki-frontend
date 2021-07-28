@@ -5,6 +5,18 @@
   color: black;
 }
 
+.searchBar {
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
+  border-radius: 51px;
+  width: 100%;
+  position: relative;
+  padding: .8rem 2.5rem;
+  background: white;
+  font-size: 1rem;
+  outline: none;
+  border: 3px solid white;
+}
+
 .inputBox {
   width: 100%;
   border: none;
@@ -43,6 +55,42 @@ textarea {
   padding-top: 0.5rem;
   border-bottom: 0.15rem solid black;
 }
+
 .disabled {
   border-bottom: 0.15rem solid grey;
+}
+
+#alert-body {
+  width: 90%;
+  padding: 1rem;
+  padding-right: 2.5rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  position: relative;
+}
+
+#alert-body p {
+  margin: 0;
+  color: white;
+}
+
+#close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  margin: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+  background-color: black;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+#close-btn:hover {
+  opacity: 0.7;
 }

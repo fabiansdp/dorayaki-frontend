@@ -32,19 +32,19 @@ const DorayakiCard : React.FC<Props> = ({id, name, description, gambar, setIsEdi
         />
       </div>
       <div className="flex border-box p-1 flex-col">
-          <h2 className="text-lg font-medium">{name}</h2>
-          <p>{description}</p>
-          <Link to={`dorayaki/${id}`}>
-            <p className="text-center text-sm bg-blue-500 rounded py-2 text-white mt-2">
-              View Dorayaki
-            </p>
-          </Link>
-          <p 
-            className="cursor-pointer text-center text-sm bg-red-500 rounded py-2 text-white mt-2"
-            onClick={handleDelete}
-          >
-            Remove Dorayaki
+        <h2 className="text-lg font-medium">{name}</h2>
+        <p>{description}</p>
+        <Link to={`dorayaki/${id}`}>
+          <p className="text-center text-sm bg-blue-500 rounded py-2 text-white mt-2">
+            View Dorayaki
           </p>
+        </Link>
+        <p 
+          className="cursor-pointer text-center text-sm bg-red-500 rounded py-2 text-white mt-2"
+          onClick={handleDelete}
+        >
+          Remove Dorayaki
+        </p>
       </div>
     </div>
   )

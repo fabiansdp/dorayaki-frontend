@@ -6,6 +6,7 @@ import Modal from "../Modal";
 import InputField from "../InputField";
 import TextArea from "../TextArea";
 import FileInput from "../FileInput";
+import Alert from "../Alert";
 
 const DorayakiList : React.FC = () => {
   const [dorayakis, setDorayakis] = useState<Dorayaki[]>([]);
@@ -34,12 +35,13 @@ const DorayakiList : React.FC = () => {
         deskripsi: deskripsi,
         gambar: image
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         setIsEdited(true)
         setShowModal(false)
       })
       .catch((err) => setError(err.message))
+    } else {
+      setError("Ada field kosong")
     }
   }
 
@@ -56,6 +58,7 @@ const DorayakiList : React.FC = () => {
             name="Cancel"
             submit={false}
             handleClick={() => {
+              setError(null)
               setShowModal(!showModal)
             }}
           />
@@ -66,6 +69,7 @@ const DorayakiList : React.FC = () => {
             handleClick={handleSubmit}
           />
         </div>
+        {showModal && error && <Alert error={error} setError={setError} />}
       </Modal>
     )
   }
@@ -83,6 +87,7 @@ const DorayakiList : React.FC = () => {
             setShowModal(!showModal)
           }}
         />
+        {!showModal && error && <Alert error={error} setError={setError} />}
         <div className="mt-5 flex flex-wrap justify-center items-center">
           {dorayakis.map((dorayaki, index) => (
             <DorayakiCard 

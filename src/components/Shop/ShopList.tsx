@@ -5,6 +5,8 @@ import { ShopInfo } from "../../interfaces/shop";
 import FilledButton from "../FilledButton";
 import Modal from "../Modal";
 import InputField from "../InputField";
+import SearchBar from "../SearchBar";
+import Alert from "../Alert";
 
 const ShopList : React.FC = () => {
   const fields = ['No.', 'Nama', 'Jalan', 'Kecamatan', 'Provinsi', 'Action'];
@@ -15,18 +17,34 @@ const ShopList : React.FC = () => {
   const [jalan, setJalan] = useState<string | undefined>();
   const [kecamatan, setKecamatan] = useState<string | undefined>();
   const [provinsi, setProvinsi] = useState<string | undefined>();
+  const [query, setQuery] = useState<string>('');
+  const [error, setError] = useState<string | null>();
 
   useEffect(() => {
     getShops()
-      .then((res) => {
-        setShops(res.data);
-        setEdited(false);
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    .then((res) => {
+      setShops(res.data);
+      setEdited(false);
+    })
+    .catch(() => {
+      setShops([])
+    })
     
   }, [edited]);
+
+  const updateSearch = async (query: string) => {
+    const filtered = shops.filter(shop => {
+      return shop.provinsi.toLowerCase().includes(query.toLowerCase()) || shop.kecamatan.toLowerCase().includes(query.toLowerCase());
+    });
+
+    if (query !== "") {
+      setQuery(query);
+      setShops(filtered);
+    } else {
+      setQuery(query);
+      setEdited(true);
+    }
+  };
 
   const handleDelete = (id: number) => {
     deleteShop(id)
@@ -56,7 +74,9 @@ const ShopList : React.FC = () => {
         setEdited(true);
         setShowModal(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setError(err.message));
+    } else {
+      setError("Ada input kosong")
     }
   }
 
@@ -84,6 +104,7 @@ const ShopList : React.FC = () => {
             handleClick={handleSubmit}
           />
         </div>
+        {error && <Alert error={error} setError={setError}/>}
       </Modal>
     )
   }
@@ -91,17 +112,24 @@ const ShopList : React.FC = () => {
   return (
     <>
       {showModal ? shopModal() : null}
-      <div className="table w-full p-2">
-        <FilledButton 
-          width="200px"
-          name="+ Add Shop"
-          submit={false}
-          handleClick={() => {
-            resetFields()
-            setShowModal(!showModal)
-          }}
-        />
-        <table className="w-full border mt-4">
+      <div className="table w-full p-2 overflow-scroll">
+        <div className="block md:flex justify-between">
+          <FilledButton 
+            width="200px"
+            name="+ Add Shop"
+            submit={false}
+            handleClick={() => {
+              setError(null)
+              resetFields()
+              setShowModal(!showModal)
+            }}
+          />
+          <SearchBar 
+            value={query}
+            OnChange={updateSearch}
+          />
+        </div>
+        <table className="w-full border mt-4 table-auto">
           <thead>
             <tr className="bg-gray-50 border-b">
               {fields.map((field, index) => (
@@ -121,7 +149,7 @@ const ShopList : React.FC = () => {
                 <td className="p-5 border-r">{shop.jalan}</td>
                 <td className="p-5 border-r">{shop.kecamatan}</td>
                 <td className="p-5 border-r">{shop.provinsi}</td>
-                <td className="p-5 text-base font-bold text-white flex justify-center items-center">
+                <td className="p-5 text-base font-bold text-white block md:flex justify-center items-center">
                   <Link to={`/shops/${shop.id}`}>
                     <p className="bg-yellow-400 p-2 rounded-lg">View</p>
                   </Link>

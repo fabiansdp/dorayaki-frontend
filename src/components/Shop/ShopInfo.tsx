@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { updateShop } from "../../utils/shop";
+import { formatDate } from "../../utils/helper";
 import { ShopInfo as Info } from "../../interfaces/shop";
 import FilledButton from "../FilledButton";
 import InputField from "../InputField";
-import { formatDate } from "../../utils/helper";
+import Alert from "../Alert";
 
 interface Props {
   shopInfo?: Info;
@@ -75,6 +76,7 @@ const ShopInfo : React.FC<Props> = ({shopInfo, setSuccess}) => {
           handleClick={handleSubmit}
         />
       }
+      {error && <Alert error={error} setError={setError} />}
     </div> 
   )
 } 

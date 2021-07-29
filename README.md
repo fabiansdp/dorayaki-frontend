@@ -36,3 +36,7 @@ Clone repository ini dan lakukan kedua command di bawah:
 npm install
 npm run dev
 ```
+File .env memiliki isi sebagai berikut:
+```
+VITE_BACKEND_URL=http://{url-rest-api}/api
+```

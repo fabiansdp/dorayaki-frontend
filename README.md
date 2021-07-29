@@ -5,6 +5,7 @@
 * [Kontributor](#kontributor)
 * [Penjelasan](#penjelasan)
 * [Fitur](#fitur)
+* [Instalasi](#instalasi)
 
 ## Kontributor
 Fabian Savero Diaz Pranoto (13519140)
@@ -28,3 +29,10 @@ Sebuah website sebagai tugas seleksi Asisten Lab Programming. Digunakan untuk me
 13. Mengubah informasi dasar toko
 14. Menghapus toko
 15. Fitur query search untuk mencari toko berdasarkan kecamatan atau provinsi
+
+## Instalasi
+Clone repository ini dan lakukan kedua command di bawah:
+```cmd
+npm install
+npm run dev
+```

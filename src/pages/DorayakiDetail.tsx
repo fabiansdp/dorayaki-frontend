@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getDorayaki } from "../utils/dorayaki";
+import { Dorayaki } from "../interfaces/dorayaki";
 import Layout from '../components/Layout';
 import Header from '../components/Header';
 import DorayakiInfo from "../components/Dorayaki/DorayakiInfo";

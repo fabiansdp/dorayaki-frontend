@@ -1,17 +1,17 @@
-interface Dorayaki {
+export interface Dorayaki {
   id: number;
   rasa: string;
   deskripsi: string;
   gambar: string;
 }
 
-interface CreateDorayaki {
+export interface CreateDorayaki {
   rasa: string;
   deskripsi: string;
   gambar: File;
 }
 
-interface UpdateDorayaki {
+export interface UpdateDorayaki {
   rasa?: string;
   deskripsi?: string;
   gambar?: File;

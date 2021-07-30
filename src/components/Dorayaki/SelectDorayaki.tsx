@@ -1,4 +1,5 @@
 import React from 'react';
+import { Dorayaki } from "../../interfaces/dorayaki";
 import '../../styles/style.css';
 
 interface Props {

@@ -3,6 +3,7 @@ import { updateInventory, addInventory, moveInventory, getShops, deleteInventory
 import { ShopInfo, ShopInventory as Inventory } from "../../interfaces/shop";
 import { useParams } from "react-router";
 import { getDorayakis } from "../../utils/dorayaki";
+import { Dorayaki } from "../../interfaces/dorayaki";
 import InputField from "../InputField";
 import Modal from "../Modal";
 import ConfirmModal from "../ConfirmModal";

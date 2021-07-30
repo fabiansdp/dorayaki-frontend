@@ -5,6 +5,7 @@ import InputField from "../InputField";
 import FilledButton from "../FilledButton";
 import TextArea from "../TextArea";
 import FileInput from "../FileInput";
+import { Dorayaki } from "../../interfaces/dorayaki";
 
 interface Props {
   dorayaki: Dorayaki;

@@ -7,6 +7,7 @@ import InputField from "../InputField";
 import TextArea from "../TextArea";
 import FileInput from "../FileInput";
 import Alert from "../Alert";
+import { Dorayaki } from "../../interfaces/dorayaki";
 
 const DorayakiList : React.FC = () => {
   const [dorayakis, setDorayakis] = useState<Dorayaki[]>([]);

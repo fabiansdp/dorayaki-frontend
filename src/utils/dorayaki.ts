@@ -1,4 +1,5 @@
 import { axiosInstance } from "./axios";
+import { CreateDorayaki, UpdateDorayaki, } from "../interfaces/dorayaki"
 
 export const getDorayakis = async() => {
   try {
